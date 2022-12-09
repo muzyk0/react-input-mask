@@ -5,6 +5,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import replace from 'rollup-plugin-replace';
 import protoToAssign from './rollup.proto-to-assign.plugin';
 import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
+import copy from 'rollup-plugin-copy';
 
 const input = './src/index.js';
 
@@ -14,6 +15,14 @@ const isExternal = id => !id.startsWith('\0') && !id.startsWith('.') && !id.star
 
 const external = ['react', 'react-dom'];
 const plugins = [
+  copy({
+    targets: [
+      {
+        src: 'src/index.d.ts',
+        dest: 'dist'
+      }
+    ]
+  }),
   babel(),
   resolve({
     jsnext: true
