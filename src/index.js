@@ -453,6 +453,16 @@ class InputElement extends React.Component {
     }
   }
 
+  onClickCapture = (event) => {
+    if (this.props.setCursorToEnd) {
+      this.setCursorToEnd();
+    }
+
+    if (isFunction(this.props.onClickCapture)) {
+      this.props.onClickCapture(event);
+    }
+  }
+
   onBlur = (event) => {
     const { beforeMaskedValueChange } = this.props;
     const { mask } = this.maskOptions;
@@ -547,7 +557,7 @@ class InputElement extends React.Component {
   }
 
   render() {
-    const { mask, alwaysShowMask, maskChar, formatChars, inputRef, beforeMaskedValueChange, children, ...restProps } = this.props;
+    const { mask, alwaysShowMask, maskChar, formatChars, inputRef, beforeMaskedValueChange, setCursorToEnd, children, ...restProps } = this.props;
     let inputElement;
 
     warning(
@@ -595,6 +605,7 @@ class InputElement extends React.Component {
         changedProps.onChange = this.onChange;
         changedProps.onPaste = this.onPaste;
         changedProps.onMouseDown = this.onMouseDown;
+        changedProps.onClickCapture = this.onClickCapture;
       }
 
       if (restProps.value != null) {
